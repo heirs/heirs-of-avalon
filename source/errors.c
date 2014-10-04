@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 
-#include <errors.h>
+#include "errors.h"
 
 #define HOA_DEBUG   1
 #define HOA_E_COUNT 3

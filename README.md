@@ -9,6 +9,8 @@ Website: [link](http://heirsofavalon.org)
 * Easy to follow intro [gamedev.net](http://www.gamedev.net/page/resources/_/technical/game-programming/understanding-component-entity-systems-r3013)
 * JS Implementation [Lemonade Baron](https://github.com/yzziizzy/LemonadeBaron)
 * Entity Systems wiki [T-Machine](http://entity-systems-wiki.t-machine.org/)
+* [CGame](https://github.com/nikki93/cgame)
+* [EntityX](https://github.com/alecthomas/entityx)
 
 # License/Copying #
 

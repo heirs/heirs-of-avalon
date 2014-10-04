@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <systems.h>
+#include "systems.h"
 
-#include <systems/movement.h>
+#include "systems/movement.h"
 
 void systems_run(World *w) {
 	movement_run(w);

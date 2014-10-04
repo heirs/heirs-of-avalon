@@ -4,7 +4,7 @@ LUA_LIB = lua5.2
 
 CC		= gcc
 DEBUG		= -g
-CFLAGS		= -W -Wall -I.. -pthread -g -I./$(SRC_DIR)
+CFLAGS		= -W -Wall -I.. -pthread -g
 LUACFLAGS	= $(shell pkg-config --cflags $(LUA_LIB) )
 LUALFLAGS	= $(shell pkg-config --libs $(LUA_LIB) )
 LFLAGS		= -L./$(OBJ_DIR)
