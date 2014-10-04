@@ -12,7 +12,7 @@ LINK		= $(CC)
 
 TARGET = heirs
 EXT = c
-SRCS = $(wildcard $(SRC_DIR)/*.$(EXT))
+SRCS = $(shell find $(SRC_DIR) -type f -name '*.$(EXT)')
 OBJS = $(SRCS:$(SRC_DIR)/%.$(EXT)=$(OBJ_DIR)/%.o)
 
 .PHONY: all clean

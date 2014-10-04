@@ -19,22 +19,6 @@
 #ifndef HOA_SYSTEMS_H
 #define HOA_SYSTEMS_H
 
-#define MASK_MOVEMENT (C_POSITION | C_VELOCITY)
-
-void sys_movement(World *w) {
-	eid n;
-	Position *p;
-	Velocity *v;
-	
-	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
-		if ((w->mask[n] & MASK_MOVEMENT) == MASK_MOVEMENT) {
-			p = &(w->position[n]);
-			v = &(w->velocity[n]);
-			
-			p->x += v->x;
-			p->y += v->y;
-		}
-	}
-}
+void systems_run(World *w);
 
 #endif // HOA_SYSTEMS_H

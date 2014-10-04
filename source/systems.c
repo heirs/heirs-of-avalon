@@ -14,26 +14,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <defines.h>
+#include <systems.h>
 
-#ifndef HOA_ERRORS_H
-#define HOA_ERRORS_H
+#include <systems/movement.h>
 
-int HOA_DEBUG;
-int HOA_E_COUNT;
-
-enum {
-	E_ERR_INVALID,
-	E_ENTITY_LIMIT,
-	E_ENTITY_INVALID
+void systems_run(World *w) {
+	movement_run(w);
 };
-
-extern const char * const err_message[];
-
-int valid_err(err e);
-
-void e_const(err e, const char *msg);
-void e_int(err e, int v);
-void e_none(err e);
-
-#endif // HOA_ERRORS_H

@@ -14,26 +14,45 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <defines.h>
+#include <stdio.h>
 
-#ifndef HOA_ERRORS_H
-#define HOA_ERRORS_H
+#include <errors.h>
 
-int HOA_DEBUG;
-int HOA_E_COUNT;
+#define HOA_DEBUG   1
+#define HOA_E_COUNT 3
 
-enum {
-	E_ERR_INVALID,
-	E_ENTITY_LIMIT,
-	E_ENTITY_INVALID
+const char * const err_message[HOA_E_COUNT] = {
+	"E_ERR_INVALID",
+	"E_ENTITY_LIMIT",
+	"E_ENTITY_INVALID"
 };
 
-extern const char * const err_message[];
+// checks whether an error code is valid to print
+// if not, warns of the invalid error
+int valid_err(err e) {
+	if (!HOA_DEBUG) return 0;
+	
+	if (e < HOA_E_COUNT) return 1;
+	
+	e_int(E_ERR_INVALID,e);
+	
+	return 0;
+}
 
-int valid_err(err e);
+void e_const(err e, const char *msg) {
+	if (!valid_err(e)) return;
+	
+	printf("ERR: %s, MSG: %s",err_message[e],msg);
+}
 
-void e_const(err e, const char *msg);
-void e_int(err e, int v);
-void e_none(err e);
+void e_int(err e, int v) {
+	if (!valid_err(e)) return;
+	
+	printf("ERR: %s, VAL: %d",err_message[e],v);
+}
 
-#endif // HOA_ERRORS_H
+void e_none(err e) {
+	if (!valid_err(e)) return;
+	
+	printf("ERR: %s",err_message[e]);
+}

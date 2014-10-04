@@ -103,7 +103,7 @@ int main(/*int argc,char* argv[]*/) {
 	limit = 1000;
 	tick = 0;
 	while(tick++ < limit) {
-		sys_movement(&world);
+		systems_run(&world);
 	
 		if (tick % 97 == 0) {
 			printf("===== TICK %3d =====\n",tick);
