@@ -4,6 +4,12 @@ A real-time civilization building game with mythological influences and a steamp
 
 Website: [link](http://heirsofavalon.org)
 
+# Component Entity System Resources #
+
+* Easy to follow intro [gamedev.net](http://www.gamedev.net/page/resources/_/technical/game-programming/understanding-component-entity-systems-r3013)
+* JS Implementation [Lemonade Baron](https://github.com/yzziizzy/LemonadeBaron)
+* Entity Systems wiki [T-Machine](http://entity-systems-wiki.t-machine.org/)
+
 # License/Copying #
 
 Heirs of Avalon is copyright (C) 2014 by David Ulrich.
