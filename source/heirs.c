@@ -15,14 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ===== Stdlib Includes ===== //
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-// ===== Readline Includes ===== //
-#include <readline/readline.h>
-#include <readline/history.h>
+// ===== SDL Includes ===== //
+#include <SDL.h>
 
 // ===== Project Includes ===== //
 #include "includes.h"

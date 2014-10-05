@@ -1,12 +1,12 @@
 SRC_DIR = source
 OBJ_DIR = object
-LUA_LIB = lua5.2
+LIBS = lua5.2 sdl
 
 CC		= gcc
 DEBUG		= -g
 CFLAGS		= -W -Wall -I.. -pthread -g
-LUACFLAGS	= $(shell pkg-config --cflags $(LUA_LIB) )
-LUALFLAGS	= $(shell pkg-config --libs $(LUA_LIB) )
+LIBCFLAGS	= $(shell pkg-config --cflags $(LIBS) )
+LIBLFLAGS	= $(shell pkg-config --libs $(LIBS) )
 LFLAGS		= -L./$(OBJ_DIR)
 LINK		= $(CC)
 
@@ -19,10 +19,10 @@ OBJS = $(SRCS:$(SRC_DIR)/%.$(EXT)=$(OBJ_DIR)/%.o)
 .SUFFIXES: .o .cc
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.$(EXT)
-	$(CC) $(CFLAGS) $(LUACFLAGS) $(DEBUG) -o $@ -c $<
+	$(CC) $(CFLAGS) $(LIBCFLAGS) $(DEBUG) -o $@ -c $<
 
 all: $(TARGET)
-	$(LINK) -o $(TARGET) $(OBJS) $(LFLAGS) $(LUALFLAGS)
+	$(LINK) -o $(TARGET) $(OBJS) $(LFLAGS) $(LIBLFLAGS)
 
 $(TARGET): $(OBJS)
 
