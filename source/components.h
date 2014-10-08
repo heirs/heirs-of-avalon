@@ -34,6 +34,15 @@ typedef struct {
 typedef struct {
 	float x;
 	float y;
+} ScreenPosition;
+
+typedef struct {
+	GFX *sprite;
+} Sprite;
+
+typedef struct {
+	float x;
+	float y;
 } Velocity;
 
 // ===== Component Type IDs ===== //
@@ -41,7 +50,9 @@ typedef enum {
 	C_NONE = 0,
 	C_NAME = 1 << 0,
 	C_POSITION = 1 << 1,
-	C_VELOCITY = 1 << 2
+	C_VELOCITY = 1 << 2,
+	C_SCREEN_POSITION = 1 << 3,
+	C_SPRITE = 1 << 4
 } Component;
 
 // ===== Container for All Entities ===== //
@@ -50,6 +61,8 @@ typedef struct {
 	
 	Name name[HOA_ENTITIES_MAX];
 	Position position[HOA_ENTITIES_MAX];
+	ScreenPosition screen_position[HOA_ENTITIES_MAX];
+	Sprite sprite[HOA_ENTITIES_MAX];
 	Velocity velocity[HOA_ENTITIES_MAX];
 } World;
 

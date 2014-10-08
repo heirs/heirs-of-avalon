@@ -17,12 +17,13 @@
 #include "errors.h"
 
 #define HOA_DEBUG   1
-#define HOA_E_COUNT 3
+#define HOA_E_COUNT 4
 
 const char * const err_message[HOA_E_COUNT] = {
 	"E_ERR_INVALID",
 	"E_ENTITY_LIMIT",
-	"E_ENTITY_INVALID"
+	"E_ENTITY_INVALID",
+	"E_ASSET_INVALID"
 };
 
 // checks whether an error code is valid to print
@@ -40,17 +41,17 @@ int valid_err(err e) {
 void e_const(err e, const char *msg) {
 	if (!valid_err(e)) return;
 	
-	printf("ERR: %s, MSG: %s",err_message[e],msg);
+	printf("ERR: %s, MSG: %s\n",err_message[e],msg);
 }
 
 void e_int(err e, int v) {
 	if (!valid_err(e)) return;
 	
-	printf("ERR: %s, VAL: %d",err_message[e],v);
+	printf("ERR: %s, VAL: %d\n",err_message[e],v);
 }
 
 void e_none(err e) {
 	if (!valid_err(e)) return;
 	
-	printf("ERR: %s",err_message[e]);
+	printf("ERR: %s\n",err_message[e]);
 }

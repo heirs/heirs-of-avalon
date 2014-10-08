@@ -23,11 +23,24 @@
 #include "includes.h"
 #include "systems.h"
 
-void world_init(World *w) {
+void world_load(World *w) {
 	int i;
 	
-	for(i=0;i<HOA_ENTITIES_MAX;i++) w->mask[i] = C_NONE;
+	for(i=0;i<HOA_ENTITIES_MAX;i++) {
+		w->mask[i] = C_NONE;
+		w->sprite[i].sprite = NULL;
+	}
 }
+
+void world_unload(World *w) {
+	int i;
+	
+	for(i=0;i<HOA_ENTITIES_MAX;i++) {
+		if(w->mask[i] != C_NONE) {
+			SDL_FreeSurface(w->sprite[i].sprite);
+		}
+	}
+};
 
 eid entity_create(World *w) {
 	eid n;
@@ -48,6 +61,19 @@ void entity_destroy(World *w, eid n) {
 	}
 	
 	w->mask[n] = C_NONE;
+}
+
+eid create_gui(World *w, float x, float y, const char *path) {
+	eid n = entity_create(w);
+	
+	w->mask[n] = C_POSITION | C_NAME;
+	
+	w->screen_position[n].x = x;
+	w->screen_position[n].y = y;
+	
+	w->sprite[n].sprite = gfx_load_asset(path);
+	
+	return n;
 }
 
 eid create_tile(World *w, float x, float y, char *name) {
@@ -83,9 +109,9 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 int main(/*int argc,char* argv[]*/) {
 	World world;
 	int i,limit,tick;
-	eid ns[5];
+	eid ns[6];
 	
-	world_init(&world);
+	world_load(&world);
 	
 	printf("Welcome, Players\n");
 
@@ -94,13 +120,14 @@ int main(/*int argc,char* argv[]*/) {
 	ns[2] = create_tile(&world,2,1,"water");
 	ns[3] = create_tile(&world,2,2,"water");
 	ns[4] = create_unit(&world,0,0,0.02,0.02,"deer");
+	ns[5] = create_gui(&world,0,0,"assets/green_dot.bmp");
 	
 	limit = 1000;
 	tick = 0;
 	while(tick++ < limit) {
 		systems_run(&world);
 	
-		if (tick % 97 == 0) {
+		if (tick % 97 == 0 && 0) {
 			printf("===== TICK %3d =====\n",tick);
 			for(i=0; i < 5; i++) {
 				printf("Entity #%d is %s at (%.2f,%.2f)\n",
@@ -111,6 +138,8 @@ int main(/*int argc,char* argv[]*/) {
 			}
 		}
 	}
+	
+	world_unload(&world);
 	
 	printf("Goodbye.\n");
 	return 0;

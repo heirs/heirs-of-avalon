@@ -16,11 +16,15 @@
 
 #include <stdint.h>
 
+#include <SDL.h>
+
 #ifndef HOA_DEFINES_H
 #define HOA_DEFINES_H
 
 typedef uint32_t cmask;
 typedef uint32_t eid;
 typedef uint16_t err;
+
+typedef SDL_Surface GFX;
 
 #endif // HOA_DEFINES_H

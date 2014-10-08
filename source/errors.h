@@ -29,7 +29,8 @@ int HOA_E_COUNT;
 enum {
 	E_ERR_INVALID,
 	E_ENTITY_LIMIT,
-	E_ENTITY_INVALID
+	E_ENTITY_INVALID,
+	E_ASSET_INVALID
 };
 
 extern const char * const err_message[];

@@ -14,20 +14,19 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "movement.h"
+// ===== SDL Includes ===== //
+#include <SDL.h>
 
-void movement_run(World *w) {
-	eid n;
-	Position *p;
-	Velocity *v;
-	
-	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
-		if ((w->mask[n] & MASK_MOVEMENT) == MASK_MOVEMENT) {
-			p = &(w->position[n]);
-			v = &(w->velocity[n]);
-			
-			p->x += v->x;
-			p->y += v->y;
-		}
-	}
-}
+// ===== Project Includes ===== //
+#include "../includes.h"
+
+#ifndef HOA_SYSTEMS_GUI_H
+#define HOA_SYSTEMS_GUI_H
+
+#define MASK_GUI (C_SCREEN_POSITION | C_SPRITE)
+
+GFX* gfx_load_asset(const char *path);
+
+void gui_run(World *w);
+
+#endif // HOA_SYSTEMS_GUI_H

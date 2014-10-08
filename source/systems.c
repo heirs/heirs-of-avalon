@@ -16,8 +16,7 @@
 
 #include "systems.h"
 
-#include "systems/movement.h"
-
 void systems_run(World *w) {
 	movement_run(w);
+	gui_run(w);
 };
