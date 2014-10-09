@@ -14,6 +14,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <stdbool.h>
+
+#include <SDL.h>
+
 #include "defines.h"
 #include "components.h"
 #include "errors.h"

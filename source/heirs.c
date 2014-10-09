@@ -16,12 +16,13 @@
 
 // ===== Stdlib Includes ===== //
 
-// ===== SDL Includes ===== //
-#include <SDL.h>
-
 // ===== Project Includes ===== //
 #include "includes.h"
 #include "systems.h"
+
+// hacks
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 
 void world_load(World *w) {
 	int i;
@@ -30,6 +31,25 @@ void world_load(World *w) {
 		w->mask[i] = C_NONE;
 		w->sprite[i].sprite = NULL;
 	}
+	
+	w->window = NULL;
+	w->screen = NULL;
+	
+	if(SDL_Init(SDL_INIT_VIDEO) < 0) return e_const(E_SDL,SDL_GetError());
+	
+	w->window = SDL_CreateWindow(
+		"Heirs of Avalon",
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
+		SCREEN_WIDTH, SCREEN_HEIGHT,
+		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+	);
+	
+	if (w->window == NULL) return e_const(E_SDL,SDL_GetError());
+	
+	w->screen = SDL_GetWindowSurface(w->window);
+	
+	if (w->screen == NULL) return e_const(E_SDL,SDL_GetError());
 }
 
 void world_unload(World *w) {
@@ -38,8 +58,15 @@ void world_unload(World *w) {
 	for(i=0;i<HOA_ENTITIES_MAX;i++) {
 		if(w->mask[i] != C_NONE) {
 			SDL_FreeSurface(w->sprite[i].sprite);
+			w->sprite[i].sprite = NULL;
 		}
 	}
+	
+	SDL_DestroyWindow(w->window);
+	w->window = NULL;
+	w->screen = NULL;
+	
+	SDL_Quit();
 };
 
 eid entity_create(World *w) {
@@ -66,10 +93,12 @@ void entity_destroy(World *w, eid n) {
 eid create_gui(World *w, float x, float y, const char *path) {
 	eid n = entity_create(w);
 	
-	w->mask[n] = C_POSITION | C_NAME;
+	w->mask[n] = C_SCREEN_POSITION | C_SPRITE | C_NAME;
 	
 	w->screen_position[n].x = x;
 	w->screen_position[n].y = y;
+	
+	w->name[n].name = "sprite";
 	
 	w->sprite[n].sprite = gfx_load_asset(path);
 	
@@ -108,8 +137,11 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 /* ===== MAIN ===== */
 int main(/*int argc,char* argv[]*/) {
 	World world;
-	int i,limit,tick;
+// 	int i,limit,tick;
 	eid ns[6];
+	bool quit = false;
+	SDL_Event ev;
+	err e = 0;
 	
 	world_load(&world);
 	
@@ -122,22 +154,34 @@ int main(/*int argc,char* argv[]*/) {
 	ns[4] = create_unit(&world,0,0,0.02,0.02,"deer");
 	ns[5] = create_gui(&world,0,0,"assets/green_dot.bmp");
 	
-	limit = 1000;
-	tick = 0;
-	while(tick++ < limit) {
-		systems_run(&world);
-	
-		if (tick % 97 == 0 && 0) {
-			printf("===== TICK %3d =====\n",tick);
-			for(i=0; i < 5; i++) {
-				printf("Entity #%d is %s at (%.2f,%.2f)\n",
-					ns[i],
-					world.name[ns[i]].name,
-					world.position[ns[i]].x,
-					world.position[ns[i]].y);
-			}
+	while (!quit) {
+		while (SDL_PollEvent(&ev) != 0) {
+			if (ev.type == SDL_QUIT) quit = true;
 		}
+		
+		world.screen = SDL_GetWindowSurface(world.window);
+		
+		systems_run(&world);
+		
+		e = SDL_UpdateWindowSurface(world.window);
+		if (e != 0) e_const(E_SDL,SDL_GetError());
 	}
+// 	limit = 1000;
+// 	tick = 0;
+// 	while(tick++ < limit) {
+// 		systems_run(&world);
+// 	
+// 		if (tick % 97 == 0 && 0) {
+// 			printf("===== TICK %3d =====\n",tick);
+// 			for(i=0; i < 5; i++) {
+// 				printf("Entity #%d is %s at (%.2f,%.2f)\n",
+// 					ns[i],
+// 					world.name[ns[i]].name,
+// 					world.position[ns[i]].x,
+// 					world.position[ns[i]].y);
+// 			}
+// 		}
+// 	}
 	
 	world_unload(&world);
 	

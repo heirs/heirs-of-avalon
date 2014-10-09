@@ -1,6 +1,6 @@
 SRC_DIR = source
 OBJ_DIR = object
-LIBS = lua5.2 sdl
+LIBS = lua5.2 sdl2
 
 CC		= gcc
 DEBUG		= -g

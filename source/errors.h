@@ -30,7 +30,8 @@ enum {
 	E_ERR_INVALID,
 	E_ENTITY_LIMIT,
 	E_ENTITY_INVALID,
-	E_ASSET_INVALID
+	E_ASSET_INVALID,
+	E_SDL
 };
 
 extern const char * const err_message[];

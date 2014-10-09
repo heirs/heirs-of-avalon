@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <SDL.h>
+
 #include "defines.h"
 
 #ifndef HOA_COMPONENTS_H
@@ -64,6 +66,9 @@ typedef struct {
 	ScreenPosition screen_position[HOA_ENTITIES_MAX];
 	Sprite sprite[HOA_ENTITIES_MAX];
 	Velocity velocity[HOA_ENTITIES_MAX];
+	
+	SDL_Window *window;
+	GFX *screen;
 } World;
 
 #endif // HOA_COMPONENTS_H

@@ -17,13 +17,14 @@
 #include "errors.h"
 
 #define HOA_DEBUG   1
-#define HOA_E_COUNT 4
+#define HOA_E_COUNT 5
 
 const char * const err_message[HOA_E_COUNT] = {
 	"E_ERR_INVALID",
 	"E_ENTITY_LIMIT",
 	"E_ENTITY_INVALID",
-	"E_ASSET_INVALID"
+	"E_ASSET_INVALID",
+	"E_SDL"
 };
 
 // checks whether an error code is valid to print

@@ -16,6 +16,14 @@
 
 #include "gui.h"
 
+void gfx_blit_sprite(World *w,GFX *sprite) {
+	err e = 0;
+	
+	e = SDL_BlitSurface(sprite,NULL,w->screen,NULL);
+	
+	if (e != 0) e_const(E_SDL,SDL_GetError());
+}
+
 GFX* gfx_load_asset(const char *path) {
 	GFX *sprite = SDL_LoadBMP(path);
 	
@@ -35,6 +43,7 @@ void gui_run(World *w) {
 			s = &(w->sprite[n]);
 			
 			// show sprite
+			gfx_blit_sprite(w,s->sprite);
 		}
 	}
 }
