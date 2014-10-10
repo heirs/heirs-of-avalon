@@ -22,7 +22,7 @@
 #define MASK_GUI (C_SCREEN_POSITION | C_SPRITE)
 
 GFX* gfx_load_asset(const char *path);
-void gfx_blit_sprite(World *w,GFX *sprite);
+void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r);
 
 void gui_run(World *w);
 

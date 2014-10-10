@@ -138,7 +138,7 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 int main(/*int argc,char* argv[]*/) {
 	World world;
 // 	int i,limit,tick;
-	eid ns[6];
+	eid ns[7];
 	bool quit = false;
 	SDL_Event ev;
 	err e = 0;
@@ -152,7 +152,8 @@ int main(/*int argc,char* argv[]*/) {
 	ns[2] = create_tile(&world,2,1,"water");
 	ns[3] = create_tile(&world,2,2,"water");
 	ns[4] = create_unit(&world,0,0,0.02,0.02,"deer");
-	ns[5] = create_gui(&world,0,0,"assets/green_dot.bmp");
+	ns[5] = create_gui(&world,10,10,"assets/green_dot.bmp");
+	ns[6] = create_gui(&world,100,200,"assets/green_dot.bmp");
 	
 	while (!quit) {
 		while (SDL_PollEvent(&ev) != 0) {

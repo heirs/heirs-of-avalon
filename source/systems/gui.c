@@ -16,10 +16,10 @@
 
 #include "gui.h"
 
-void gfx_blit_sprite(World *w,GFX *sprite) {
+void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r) {
 	err e = 0;
 	
-	e = SDL_BlitSurface(sprite,NULL,w->screen,NULL);
+	e = SDL_BlitSurface(sprite,NULL,w->screen,r);
 	
 	if (e != 0) e_const(E_SDL,SDL_GetError());
 }
@@ -36,14 +36,20 @@ void gui_run(World *w) {
 	eid n;
 	ScreenPosition *p;
 	Sprite *s;
+	SDL_Rect r;
 	
 	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
 		if ((w->mask[n] & MASK_GUI) == MASK_GUI) {
 			p = &(w->screen_position[n]);
 			s = &(w->sprite[n]);
 			
+			r.x = p->x;
+			r.y = p->y;
+			r.w = s->sprite->w;
+			r.h = s->sprite->h;
+			
 			// show sprite
-			gfx_blit_sprite(w,s->sprite);
+			gfx_blit_sprite(w,s->sprite,&r);
 		}
 	}
 }

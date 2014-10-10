@@ -34,8 +34,8 @@ typedef struct {
 } Position;
 
 typedef struct {
-	float x;
-	float y;
+	int x;
+	int y;
 } ScreenPosition;
 
 typedef struct {
