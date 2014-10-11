@@ -21,6 +21,8 @@
 #ifndef HOA_DEFINES_H
 #define HOA_DEFINES_H
 
+#define HOA_TILE_SIZE 64
+
 typedef uint32_t cmask;
 typedef uint32_t eid;
 typedef uint16_t err;

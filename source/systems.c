@@ -18,5 +18,6 @@
 
 void systems_run(World *w) {
 	movement_run(w);
+	render_run(w);
 	gui_run(w);
 };

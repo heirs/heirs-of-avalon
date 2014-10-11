@@ -18,6 +18,7 @@
 
 #include "systems/gui.h"
 #include "systems/movement.h"
+#include "systems/render.h"
 
 #ifndef HOA_SYSTEMS_H
 #define HOA_SYSTEMS_H

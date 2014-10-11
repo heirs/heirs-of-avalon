@@ -14,21 +14,21 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "gui.h"
+#include "render.h"
 
-void gui_run(World *w) {
+void render_run(World *w) {
 	eid n;
-	ScreenPosition *p;
+	Position *p;
 	Sprite *s;
 	SDL_Rect r;
 	
 	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
-		if ((w->mask[n] & MASK_GUI) == MASK_GUI) {
+		if ((w->mask[n] & MASK_RENDER) == MASK_RENDER) {
 			p = &(w->screen_position[n]);
 			s = &(w->sprite[n]);
 			
-			r.x = p->x;
-			r.y = p->y;
+			r.x = num_ftoi(p->x) * HOA_TILE_SIZE;
+			r.y = num_ftoi(p->y) * HOA_TILE_SIZE;
 			r.w = s->sprite->w;
 			r.h = s->sprite->h;
 			

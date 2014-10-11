@@ -31,7 +31,8 @@ enum {
 	E_ENTITY_LIMIT,
 	E_ENTITY_INVALID,
 	E_ASSET_INVALID,
-	E_SDL
+	E_SDL,
+	E_INT_RANGE
 };
 
 extern const char * const err_message[];
@@ -39,6 +40,7 @@ extern const char * const err_message[];
 int valid_err(err e);
 
 void e_const(err e, const char *msg);
+void e_float(err e, float v);
 void e_int(err e, int v);
 void e_none(err e);
 

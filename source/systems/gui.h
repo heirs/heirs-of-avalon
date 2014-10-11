@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../includes.h"
+#include "../gfx.h"
 
 #ifndef HOA_SYSTEMS_GUI_H
 #define HOA_SYSTEMS_GUI_H

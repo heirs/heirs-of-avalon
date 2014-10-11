@@ -14,26 +14,12 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "gui.h"
+#include "includes.h"
 
-void gui_run(World *w) {
-	eid n;
-	ScreenPosition *p;
-	Sprite *s;
-	SDL_Rect r;
-	
-	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
-		if ((w->mask[n] & MASK_GUI) == MASK_GUI) {
-			p = &(w->screen_position[n]);
-			s = &(w->sprite[n]);
-			
-			r.x = p->x;
-			r.y = p->y;
-			r.w = s->sprite->w;
-			r.h = s->sprite->h;
-			
-			// show sprite
-			gfx_blit_sprite(w,s->sprite,&r);
-		}
-	}
-}
+#ifndef HOA_GFX_H
+#define HOA_GFX_H
+
+GFX* gfx_load_asset(const char *path);
+void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r);
+
+#endif // HOA_GFX_H
