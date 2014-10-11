@@ -17,7 +17,7 @@
 #include "errors.h"
 
 #define HOA_DEBUG   1
-#define HOA_E_COUNT 6
+#define HOA_E_COUNT 7
 
 const char * const err_message[HOA_E_COUNT] = {
 	"E_ERR_INVALID",
@@ -25,6 +25,7 @@ const char * const err_message[HOA_E_COUNT] = {
 	"E_ENTITY_INVALID",
 	"E_ASSET_INVALID",
 	"E_SDL",
+	"E_SDL_IMG",
 	"E_INT_RANGE"
 };
 
@@ -49,7 +50,7 @@ void e_const(err e, const char *msg) {
 void e_float(err e, float v) {
 	if (!valid_err(e)) return;
 	
-	printf("ERR: %s, VAL: %.2d\n",err_message[e],v);
+	printf("ERR: %s, VAL: %.2f\n",err_message[e],v);
 }
 
 void e_int(err e, int v) {

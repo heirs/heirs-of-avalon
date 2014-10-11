@@ -32,6 +32,7 @@ enum {
 	E_ENTITY_INVALID,
 	E_ASSET_INVALID,
 	E_SDL,
+	E_SDL_IMG,
 	E_INT_RANGE
 };
 

@@ -35,7 +35,10 @@ void world_load(World *w) {
 	w->window = NULL;
 	w->screen = NULL;
 	
-	if(SDL_Init(SDL_INIT_VIDEO) < 0) return e_const(E_SDL,SDL_GetError());
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) return e_const(E_SDL,SDL_GetError());
+	
+	if ((IMG_Init(HOA_IMG_FLAGS) & HOA_IMG_FLAGS) != HOA_IMG_FLAGS)
+		return e_const(E_SDL_IMG,IMG_GetError());
 	
 	w->window = SDL_CreateWindow(
 		"Heirs of Avalon",
@@ -66,6 +69,7 @@ void world_unload(World *w) {
 	w->window = NULL;
 	w->screen = NULL;
 	
+	IMG_Quit();
 	SDL_Quit();
 };
 
@@ -98,7 +102,7 @@ eid create_gui(World *w, float x, float y, const char *path) {
 	w->screen_position[n].x = x;
 	w->screen_position[n].y = y;
 	
-	w->name[n].name = "sprite";
+	w->name[n].name = "gui";
 	
 	w->sprite[n].sprite = gfx_load_asset(path);
 	
@@ -106,14 +110,20 @@ eid create_gui(World *w, float x, float y, const char *path) {
 }
 
 eid create_tile(World *w, float x, float y, char *name) {
+	const char *asset;
+	
 	eid n = entity_create(w);
 	
-	w->mask[n] = C_POSITION | C_NAME;
+	w->mask[n] = C_POSITION | C_SPRITE | C_NAME;
 	
 	w->position[n].x = x;
 	w->position[n].y = y;
 	
 	w->name[n].name = name;
+	
+	if (!strcmp(name,"grass")) asset = "assets/tiles/grass0_45.png";
+	else asset = "assets/tiles/shallow0_45.png";
+	w->sprite[n].sprite = gfx_load_asset(asset);
 	
 	return n;
 }
@@ -121,7 +131,7 @@ eid create_tile(World *w, float x, float y, char *name) {
 eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name) {
 	eid n = entity_create(w);
 	
-	w->mask[n] = C_POSITION | C_VELOCITY | C_NAME;
+	w->mask[n] = C_POSITION | C_SPRITE | C_VELOCITY | C_NAME;
 	
 	w->position[n].x = p_x;
 	w->position[n].y = p_y;
@@ -131,6 +141,8 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 	
 	w->name[n].name = name;
 	
+	w->sprite[n].sprite = gfx_load_asset("assets/green_dot.bmp");
+	
 	return n;
 }
 
@@ -138,7 +150,7 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 int main(/*int argc,char* argv[]*/) {
 	World world;
 // 	int i,limit,tick;
-	eid ns[7];
+// 	eid ns[7];
 	bool quit = false;
 	SDL_Event ev;
 	err e = 0;
@@ -147,13 +159,15 @@ int main(/*int argc,char* argv[]*/) {
 	
 	printf("Welcome, Players\n");
 
-	ns[0] = create_tile(&world,1,1,"sand");
-	ns[1] = create_tile(&world,1,2,"sand");
-	ns[2] = create_tile(&world,2,1,"water");
-	ns[3] = create_tile(&world,2,2,"water");
-	ns[4] = create_unit(&world,0,0,0.02,0.02,"deer");
-	ns[5] = create_gui(&world,10,10,"assets/green_dot.bmp");
-	ns[6] = create_gui(&world,100,200,"assets/green_dot.bmp");
+	create_tile(&world,1,1,"grass");
+	create_tile(&world,1,2,"grass");
+	create_tile(&world,2,1,"water");
+	create_tile(&world,2,2,"water");
+	
+	create_unit(&world,0,0,0.002,0.002,"deer");
+	
+	create_gui(&world,10,10,"assets/green_dot.bmp");
+	create_gui(&world,100,200,"assets/green_dot.bmp");
 	
 	while (!quit) {
 		while (SDL_PollEvent(&ev) != 0) {

@@ -17,6 +17,7 @@
 #include <stdbool.h>
 
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "defines.h"
 #include "components.h"

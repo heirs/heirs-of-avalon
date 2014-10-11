@@ -17,11 +17,14 @@
 #include <stdint.h>
 
 #include <SDL.h>
+#include <SDL_image.h>
 
 #ifndef HOA_DEFINES_H
 #define HOA_DEFINES_H
 
-#define HOA_TILE_SIZE 64
+#define HOA_IMG_FLAGS IMG_INIT_PNG
+#define HOA_TILE_W 64
+#define HOA_TILE_H 32
 
 typedef uint32_t cmask;
 typedef uint32_t eid;

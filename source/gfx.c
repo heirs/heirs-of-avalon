@@ -25,9 +25,9 @@ void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r) {
 }
 
 GFX* gfx_load_asset(const char *path) {
-	GFX *sprite = SDL_LoadBMP(path);
+	GFX *sprite = IMG_Load(path);
 	
-	if (sprite == NULL) e_const(E_ASSET_INVALID,SDL_GetError());
+	if (sprite == NULL) e_const(E_ASSET_INVALID,IMG_GetError());
 	
 	return sprite;
 };

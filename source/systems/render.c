@@ -24,11 +24,11 @@ void render_run(World *w) {
 	
 	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
 		if ((w->mask[n] & MASK_RENDER) == MASK_RENDER) {
-			p = &(w->screen_position[n]);
+			p = &(w->position[n]);
 			s = &(w->sprite[n]);
 			
-			r.x = num_ftoi(p->x) * HOA_TILE_SIZE;
-			r.y = num_ftoi(p->y) * HOA_TILE_SIZE;
+			r.x = num_ftoi(p->x) * HOA_TILE_W;
+			r.y = num_ftoi(p->y) * HOA_TILE_H;
 			r.w = s->sprite->w;
 			r.h = s->sprite->h;
 			
