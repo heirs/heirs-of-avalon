@@ -1,6 +1,6 @@
 SRC_DIR = source
 OBJ_DIR = object
-LIBS = lua5.2 sdl2
+LIBS = lua5.2 sdl2 SDL2_image
 
 CC		= gcc
 DEBUG		= -g
@@ -27,5 +27,5 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 
 clean:
-	rm -f $(OBJ_DIR)/*.o 2> /dev/null
+	rm -rf $(OBJ_DIR)/*.o 2> /dev/null
 	rm -f $(TARGET) 2> /dev/null
