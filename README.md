@@ -4,6 +4,13 @@ A real-time civilization building game with mythological influences and a steamp
 
 Website: [link](http://heirsofavalon.org)
 
+# Dependencies #
+
+* SDL 2.0
+* SDL Image 2.0
+* OpenGL 3.2
+* Lua 5.2
+
 # Component Entity System Resources #
 
 * Easy to follow intro [gamedev.net](http://www.gamedev.net/page/resources/_/technical/game-programming/understanding-component-entity-systems-r3013)
