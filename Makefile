@@ -1,10 +1,10 @@
 SRC_DIR = source
 OBJ_DIR = object
-LIBS = lua5.2 sdl2 SDL2_image
+LIBS = lua5.2 sdl2 SDL2_image gl
 
 CC		= gcc
 DEBUG		= -g
-CFLAGS		= -W -Wall -I.. -pthread -g
+CFLAGS		= -W -Wall -I.. -pthread -g -I/usr/include/GL/
 LIBCFLAGS	= $(shell pkg-config --cflags $(LIBS) )
 LIBLFLAGS	= $(shell pkg-config --libs $(LIBS) )
 LFLAGS		= -L./$(OBJ_DIR)
@@ -27,5 +27,5 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 
 clean:
-	rm -rf $(OBJ_DIR)/*.o 2> /dev/null
+	rm -f $(shell find object/ -type f -name '*.o') 2> /dev/null
 	rm -f $(TARGET) 2> /dev/null
