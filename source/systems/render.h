@@ -14,12 +14,11 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// ===== Project Includes ===== //
-#include "../gfx.h"
-#include "../includes.h"
-
 #ifndef HOA_SYSTEMS_RENDER_H
 #define HOA_SYSTEMS_RENDER_H
+
+#include "../components.h"
+#include "../defines.h"
 
 #define MASK_RENDER (C_POSITION | C_SPRITE)
 

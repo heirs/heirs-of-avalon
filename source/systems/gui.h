@@ -14,16 +14,13 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "../includes.h"
-#include "../gfx.h"
-
 #ifndef HOA_SYSTEMS_GUI_H
 #define HOA_SYSTEMS_GUI_H
 
-#define MASK_GUI (C_SCREEN_POSITION | C_SPRITE)
+#include "../components.h"
+#include "../defines.h"
 
-GFX* gfx_load_asset(const char *path);
-void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r);
+#define MASK_GUI (C_SCREEN_POSITION | C_SPRITE)
 
 void gui_run(World *w);
 

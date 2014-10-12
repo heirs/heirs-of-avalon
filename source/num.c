@@ -16,6 +16,9 @@
 
 #include "num.h"
 
+#include "errors.h"
+#include <limits.h>
+
 int num_ftoi(float f) {
 	if (f <= INT_MIN-0.5) {
 		e_float(E_INT_RANGE,f);

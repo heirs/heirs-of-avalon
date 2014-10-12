@@ -14,12 +14,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <SDL.h>
-
-#include "defines.h"
-
 #ifndef HOA_COMPONENTS_H
 #define HOA_COMPONENTS_H
+
+#include "defines.h"
 
 #define HOA_ENTITIES_MAX 100
 
@@ -31,6 +29,7 @@ typedef struct {
 typedef struct {
 	float x;
 	float y;
+	float z;
 } Position;
 
 typedef struct {
@@ -39,12 +38,13 @@ typedef struct {
 } ScreenPosition;
 
 typedef struct {
-	GFX *sprite;
+	SDL_Surface *sprite;
 } Sprite;
 
 typedef struct {
 	float x;
 	float y;
+	float z;
 } Velocity;
 
 // ===== Component Type IDs ===== //
@@ -68,7 +68,8 @@ typedef struct {
 	Velocity velocity[HOA_ENTITIES_MAX];
 	
 	SDL_Window *window;
-	GFX *screen;
+	SDL_GLContext context;
+	SDL_Surface *screen;
 } World;
 
 #endif // HOA_COMPONENTS_H

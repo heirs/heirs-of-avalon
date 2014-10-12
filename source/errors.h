@@ -14,14 +14,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// ===== Stdlib Includes ===== //
-#include <stdio.h>
-
-// ===== Project Includes ===== //
-#include "defines.h"
-
 #ifndef HOA_ERRORS_H
 #define HOA_ERRORS_H
+
+#include "defines.h"
 
 int HOA_DEBUG;
 int HOA_E_COUNT;

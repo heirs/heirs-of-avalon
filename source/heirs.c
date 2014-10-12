@@ -15,10 +15,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ===== Stdlib Includes ===== //
+#include <stdbool.h>
+#include <stdio.h>
+
+// ===== SDL Includes ===== //
+#include <SDL.h>
+#include <SDL_image.h>
+
+// ===== OpenGL Includes ===== //
+
+#define GL3_PROTOTYPES 1
+#include <gl.h>
 
 // ===== Project Includes ===== //
-#include "includes.h"
+#include "components.h"
+#include "defines.h"
+#include "errors.h"
+#include "gfx.h"
 #include "systems.h"
+#include "util.h"
 
 // hacks
 const int SCREEN_WIDTH = 640;
@@ -40,19 +55,39 @@ void world_load(World *w) {
 	if ((IMG_Init(HOA_IMG_FLAGS) & HOA_IMG_FLAGS) != HOA_IMG_FLAGS)
 		return e_const(E_SDL_IMG,IMG_GetError());
 	
+	/* Request opengl 3.2 context.
+	 * SDL doesn't have the ability to choose which profile at this time of writing,
+	 * but it should default to the core profile */
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	/* Enable multisampling for a nice antialiased effect */
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+	
+	/* Turn on double buffering with a 24bit Z buffer.
+	 * You may need to change this to 16 or 32 for your system */
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	
 	w->window = SDL_CreateWindow(
 		"Heirs of Avalon",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		SCREEN_WIDTH, SCREEN_HEIGHT,
-		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 	);
 	
 	if (w->window == NULL) return e_const(E_SDL,SDL_GetError());
 	
-	w->screen = SDL_GetWindowSurface(w->window);
+	w->context = SDL_GL_CreateContext(w->window);
 	
-	if (w->screen == NULL) return e_const(E_SDL,SDL_GetError());
+	// check context error?
+	/* Enable Z depth testing so objects closest to the viewpoint are in front of objects further away */
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	 /* This makes our buffer swap syncronized with the monitor's vertical refresh */
+    SDL_GL_SetSwapInterval(1);
 }
 
 void world_unload(World *w) {
@@ -64,6 +99,8 @@ void world_unload(World *w) {
 			w->sprite[i].sprite = NULL;
 		}
 	}
+	
+	SDL_GL_DeleteContext(w->context);
 	
 	SDL_DestroyWindow(w->window);
 	w->window = NULL;
@@ -104,7 +141,7 @@ eid create_gui(World *w, float x, float y, const char *path) {
 	
 	w->name[n].name = "gui";
 	
-	w->sprite[n].sprite = gfx_load_asset(path);
+	w->sprite[n].sprite = util_load_asset_img(path);
 	
 	return n;
 }
@@ -123,7 +160,7 @@ eid create_tile(World *w, float x, float y, char *name) {
 	
 	if (!strcmp(name,"grass")) asset = "assets/tiles/grass0_45.png";
 	else asset = "assets/tiles/shallow0_45.png";
-	w->sprite[n].sprite = gfx_load_asset(asset);
+	w->sprite[n].sprite = util_load_asset_img(asset);
 	
 	return n;
 }
@@ -141,7 +178,7 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 	
 	w->name[n].name = name;
 	
-	w->sprite[n].sprite = gfx_load_asset("assets/green_dot.bmp");
+	w->sprite[n].sprite = util_load_asset_img("assets/green_dot.bmp");
 	
 	return n;
 }

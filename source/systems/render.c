@@ -16,6 +16,10 @@
 
 #include "render.h"
 
+#include "../gfx.h"
+#include "../num.h"
+#include <SDL.h>
+
 void render_run(World *w) {
 	eid n;
 	Position *p;

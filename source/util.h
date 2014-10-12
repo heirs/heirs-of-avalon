@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdbool.h>
+#ifndef HOA_UTIL_H
+#define HOA_UTIL_H
 
 #include <SDL.h>
-#include <SDL_image.h>
 
-#include "defines.h"
-#include "components.h"
-#include "errors.h"
-#include "num.h"
+SDL_Surface* util_load_asset_img(const char *path);
+char* util_load_asset_string(const char *path);
+
+#endif // HOA_UTIL_H

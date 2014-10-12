@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "includes.h"
-
 #ifndef HOA_GFX_H
 #define HOA_GFX_H
 
-GFX* gfx_load_asset(const char *path);
-void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r);
+#include "components.h"
+#include "defines.h"
+#include <SDL.h>
+
+void gfx_draw_3d(World *w);
+void gfx_blit_sprite(World *w,SDL_Surface *sprite,SDL_Rect *r);
 
 #endif // HOA_GFX_H

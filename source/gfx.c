@@ -16,18 +16,10 @@
 
 #include "gfx.h"
 
-void gfx_blit_sprite(World *w,GFX *sprite,SDL_Rect *r) {
+void gfx_blit_sprite(World *w,SDL_Surface *sprite,SDL_Rect *r) {
 	err e = 0;
 	
 	e = SDL_BlitSurface(sprite,NULL,w->screen,r);
 	
 	if (e != 0) e_const(E_SDL,SDL_GetError());
 }
-
-GFX* gfx_load_asset(const char *path) {
-	GFX *sprite = IMG_Load(path);
-	
-	if (sprite == NULL) e_const(E_ASSET_INVALID,IMG_GetError());
-	
-	return sprite;
-};

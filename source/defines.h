@@ -14,13 +14,12 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdint.h>
-
-#include <SDL.h>
-#include <SDL_image.h>
-
 #ifndef HOA_DEFINES_H
 #define HOA_DEFINES_H
+
+#include <stdint.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #define HOA_IMG_FLAGS IMG_INIT_PNG
 #define HOA_TILE_W 64
@@ -29,7 +28,5 @@
 typedef uint32_t cmask;
 typedef uint32_t eid;
 typedef uint16_t err;
-
-typedef SDL_Surface GFX;
 
 #endif // HOA_DEFINES_H
