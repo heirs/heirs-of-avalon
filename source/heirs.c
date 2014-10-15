@@ -24,7 +24,7 @@
 
 // ===== OpenGL Includes ===== //
 
-#define GL3_PROTOTYPES 1
+#define GL3_PROTOTYPES
 #include <gl.h>
 
 // ===== Project Includes ===== //
@@ -196,6 +196,9 @@ int main(/*int argc,char* argv[]*/) {
 	
 	printf("Welcome, Players\n");
 
+	gfx_draw_3d(&world);
+// 	SDL_Delay(3000);
+	
 	create_tile(&world,1,1,"grass");
 	create_tile(&world,1,2,"grass");
 	create_tile(&world,2,1,"water");

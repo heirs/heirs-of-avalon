@@ -14,16 +14,13 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef HOA_GFX_H
-#define HOA_GFX_H
+#ifndef GL3_PROTOTYPES
+	#define GL3_PROTOTYPES
+#endif
 
-#include "components.h"
-#include "defines.h"
-#include "gl.h"
-#include <SDL.h>
+#ifndef GL_GLEXT_PROTOTYPES
+	#define GL_GLEXT_PROTOTYPES
+#endif
 
-int gfx_compile_shader(GLuint *shader,GLenum type,const GLchar *source);
-void gfx_draw_3d(World *w);
-void gfx_blit_sprite(World *w,SDL_Surface *sprite,SDL_Rect *r);
-
-#endif // HOA_GFX_H
+#include <gl.h>
+#include <glext.h>
