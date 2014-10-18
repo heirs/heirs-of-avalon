@@ -20,6 +20,10 @@
 #include "../num.h"
 #include <SDL.h>
 
+void render_init(World *w) {
+	// nohting, yet
+}
+
 void render_run(World *w) {
 	eid n;
 	Position *p;

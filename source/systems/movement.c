@@ -16,6 +16,10 @@
 
 #include "movement.h"
 
+void movement_init(World *w) {
+	// nothing, yet
+}
+
 void movement_run(World *w) {
 	eid n;
 	Position *p;

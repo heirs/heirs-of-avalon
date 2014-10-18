@@ -22,6 +22,8 @@
 
 #define MASK_GUI (C_SCREEN_POSITION | C_SPRITE)
 
+void gui_init(World *w);
+
 void gui_run(World *w);
 
 #endif // HOA_SYSTEMS_GUI_H

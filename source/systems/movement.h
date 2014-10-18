@@ -22,6 +22,7 @@
 
 #define MASK_MOVEMENT (C_POSITION | C_VELOCITY)
 
+void movement_init(World *w);
 void movement_run(World *w);
 
 #endif // HOA_SYSTEMS_MOVEMENT_H

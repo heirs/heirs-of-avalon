@@ -16,6 +16,12 @@
 
 #include "systems.h"
 
+void systems_init(World *w) {
+	movement_init(w);
+	render_init(w);
+	gui_init(w);
+}
+
 void systems_run(World *w) {
 	movement_run(w);
 	render_run(w);

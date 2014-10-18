@@ -19,6 +19,10 @@
 #include "../gfx.h"
 #include <SDL.h>
 
+void gui_init(World *w) {
+	// nothing, yet
+}
+
 void gui_run(World *w) {
 	eid n;
 	ScreenPosition *p;

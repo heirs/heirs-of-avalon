@@ -22,6 +22,7 @@
 
 #define MASK_RENDER (C_POSITION | C_SPRITE)
 
+void render_init(World *w);
 void render_run(World *w);
 
 #endif // HOA_SYSTEMS_RENDER_H

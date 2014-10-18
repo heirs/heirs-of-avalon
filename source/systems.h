@@ -24,6 +24,7 @@
 #include "systems/movement.h"
 #include "systems/render.h"
 
+void systems_init(World *w);
 void systems_run(World *w);
 
 #endif // HOA_SYSTEMS_H
