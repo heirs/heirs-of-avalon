@@ -36,8 +36,8 @@
 #include "util.h"
 
 // hacks
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1920;
+const int SCREEN_HEIGHT = 1080;
 
 void world_load(World *w) {
 	int i;
@@ -49,6 +49,10 @@ void world_load(World *w) {
 	
 	w->window = NULL;
 	w->screen = NULL;
+	
+	w->tick_last = 0;
+	w->tick_this = 0;
+	w->delta_ticks = 0;
 	
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) return e_const(E_SDL,SDL_GetError());
 	
@@ -186,18 +190,12 @@ eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name
 /* ===== MAIN ===== */
 int main(/*int argc,char* argv[]*/) {
 	World world;
-// 	int i,limit,tick;
-// 	eid ns[7];
 	bool quit = false;
 	SDL_Event ev;
-	err e = 0;
 	
 	world_load(&world);
 	
 	printf("Welcome, Players\n");
-
-	gfx_draw_3d(&world);
-// 	SDL_Delay(3000);
 	
 	create_tile(&world,1,1,"grass");
 	create_tile(&world,1,2,"grass");
@@ -215,28 +213,15 @@ int main(/*int argc,char* argv[]*/) {
 		}
 		
 		world.screen = SDL_GetWindowSurface(world.window);
+		world.tick_last = world.tick_this;
+		world.tick_this = SDL_GetTicks();
+		world.delta_ticks += world.tick_this - world.tick_last;
 		
 		systems_run(&world);
-		
-		e = SDL_UpdateWindowSurface(world.window);
-		if (e != 0) e_const(E_SDL,SDL_GetError());
+		SDL_GL_SwapWindow(world.window);
+// 		e = SDL_UpdateWindowSurface(world.window);
+// 		if (e != 0) e_const(E_SDL,SDL_GetError());
 	}
-// 	limit = 1000;
-// 	tick = 0;
-// 	while(tick++ < limit) {
-// 		systems_run(&world);
-// 	
-// 		if (tick % 97 == 0 && 0) {
-// 			printf("===== TICK %3d =====\n",tick);
-// 			for(i=0; i < 5; i++) {
-// 				printf("Entity #%d is %s at (%.2f,%.2f)\n",
-// 					ns[i],
-// 					world.name[ns[i]].name,
-// 					world.position[ns[i]].x,
-// 					world.position[ns[i]].y);
-// 			}
-// 		}
-// 	}
 	
 	world_unload(&world);
 	

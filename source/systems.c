@@ -17,12 +17,14 @@
 #include "systems.h"
 
 void systems_init(World *w) {
+	debug_init(w);
 	movement_init(w);
 	render_init(w);
 	gui_init(w);
 }
 
 void systems_run(World *w) {
+	if (w->tick_this % 1000 < HOA_FRAME_TICKS) debug_run(w);
 	movement_run(w);
 	render_run(w);
 	gui_run(w);

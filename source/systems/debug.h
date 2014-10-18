@@ -14,18 +14,13 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef HOA_SYSTEMS_H
-#define HOA_SYSTEMS_H
+#ifndef HOA_SYSTEMS_DEBUG_H
+#define HOA_SYSTEMS_DEBUG_H
 
-#include "components.h"
-#include "defines.h"
+#include "../components.h"
+#include "../defines.h"
 
-#include "systems/debug.h"
-#include "systems/gui.h"
-#include "systems/movement.h"
-#include "systems/render.h"
+void debug_init(World *w);
+void debug_run(World *w);
 
-void systems_init(World *w);
-void systems_run(World *w);
-
-#endif // HOA_SYSTEMS_H
+#endif // HOA_SYSTEMS_DEBUG_H

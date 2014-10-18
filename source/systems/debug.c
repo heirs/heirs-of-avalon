@@ -14,24 +14,59 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "movement.h"
+#include "debug.h"
 
-void movement_init(World *w) {
+void debug_init(World *w) {
 	// nothing, yet
 }
 
-void movement_run(World *w) {
+void debug_run(World *w) {
 	eid n;
+	Name *a;
 	Position *p;
 	Velocity *v;
+	ScreenPosition *sp;
+	
+	int win_w,win_h;
+	
+	SDL_GetWindowSize(w->window,&win_w,&win_h);
+	
+	printf("\n===== DEBUG FOR TIME %d =====\n",w->tick_this);
+	printf("WINDOW IS %d x %d\n",win_w,win_h);
 	
 	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
-		if ((w->mask[n] & MASK_MOVEMENT) == MASK_MOVEMENT) {
+		printf("=== ENTITY %d ===\n",n);
+		if (w->mask[n] == C_NONE) {
+			printf("\tEMPTY\n");
+			continue;
+		}
+		
+		if ((w->mask[n] & C_NAME) == C_NAME) {
+			a = &(w->name[n]);
+			printf("\tNAME: %s\n",a->name);
+		}
+		
+		if ((w->mask[n] & C_POSITION) == C_POSITION) {
 			p = &(w->position[n]);
+			printf("\tPOSITION: %.2f,%.2f,%.2f\n",
+				p->x,
+				p->y,
+				p->z);
+		}
+		
+		if ((w->mask[n] & C_VELOCITY) == C_VELOCITY) {
 			v = &(w->velocity[n]);
-			
-			p->x += v->x;
-			p->y += v->y;
+			printf("\tVELOCITY: %.2f,%.2f,%.2f\n",
+				v->x,
+				v->y,
+				v->z);
+		}
+		
+		if ((w->mask[n] & C_SCREEN_POSITION) == C_SCREEN_POSITION) {
+			sp = &(w->screen_position[n]);
+			printf("\tSCREEN_POSITION: %d,%d\n",
+				sp->x,
+				sp->y);
 		}
 	}
 }

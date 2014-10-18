@@ -43,4 +43,6 @@ void gui_run(World *w) {
 			gfx_blit_sprite(w,s->sprite,&r);
 		}
 	}
+	
+	gfx_draw_3d(w);
 }

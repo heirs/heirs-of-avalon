@@ -70,6 +70,10 @@ typedef struct {
 	SDL_Window *window;
 	SDL_GLContext context;
 	SDL_Surface *screen;
+	
+	time tick_last;
+	time tick_this;
+	time delta_ticks;
 } World;
 
 #endif // HOA_COMPONENTS_H

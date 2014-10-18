@@ -68,27 +68,29 @@ int gfx_compile_shader(GLuint *shader,GLenum type,const GLchar *source) {
 }
 
 void gfx_draw_3d(World *w) {
-	printf("gfx_draw_3d\n");
-    int i;
-    GLuint vao, vbo[2]; /* Create handles for our Vertex Array Object and two Vertex Buffer Objects */
-    int IsLinked;
-    int maxLength;
-    char *shaderProgramInfoLog;
+	int win_w,win_h;
+	SDL_GetWindowSize(w->window,&win_w,&win_h);
+	
+	int i;
+	GLuint vao, vbo[2]; /* Create handles for our Vertex Array Object and two Vertex Buffer Objects */
+	int IsLinked;
+	int maxLength;
+	char *shaderProgramInfoLog;
+
+	/* We're going to create a simple diamond made from lines */
+	const GLfloat diamond[4][2] = {
+		{  0.2, -0.2  },
+		{ -0.2, -0.2  },
+		{  0.2,  0.2  },
+		{ -0.2,  0.2  } };
+
+	const GLfloat colors[4][3] = {
+		{  1.0,  0.0,  0.0  }, /* Red */
+		{  0.0,  1.0,  0.0  }, /* Green */
+		{  0.0,  0.0,  1.0  }, /* Blue */
+		{  1.0,  1.0,  1.0  } }; /* White */
  
-    /* We're going to create a simple diamond made from lines */
-    const GLfloat diamond[4][2] = {
-    {  0.0,  1.0  }, /* Top point */
-    {  1.0,  0.0  }, /* Right point */
-    {  0.0, -1.0  }, /* Bottom point */
-    { -1.0,  0.0  } }; /* Left point */
- 
-    const GLfloat colors[4][3] = {
-    {  1.0,  0.0,  0.0  }, /* Red */
-    {  0.0,  1.0,  0.0  }, /* Green */
-    {  0.0,  0.0,  1.0  }, /* Blue */
-    {  1.0,  1.0,  1.0  } }; /* White */
- 
-    /* These pointers will receive the contents of our shader source code files */
+/* These pointers will receive the contents of our shader source code files */
 //     GLchar *vertexsource, *fragmentsource;
  
     /* These are handles used to reference the shaders */
@@ -191,23 +193,21 @@ void gfx_draw_3d(World *w) {
     /* Load the shader into the rendering pipeline */
     glUseProgram(shaderprogram);
  
-    /* Loop our display increasing the number of shown vertexes each time.
-     * Start with 2 vertexes (a line) and increase to 3 (a triangle) and 4 (a diamond) */
-    for (i=2; i <= 4; i++)
-    {
-        /* Make our background black */
-        glClearColor(0.0, 0.0, 0.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
+    /* Loop our display increasing the number of shown vertexes each time. */
+
+
+//         glClearColor(0.0, 0.0, 0.0, 1.0);
+//         glClear(GL_COLOR_BUFFER_BIT);
+// 	for (i=3; i <= 6; i+=3) {
+
  
         /* Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes */
-        glDrawArrays(GL_LINE_LOOP, 0, i);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
  
         /* Swap our buffers to make our changes visible */
-        SDL_GL_SwapWindow(w->window);
- 
-        /* Sleep for 2 seconds */
-        SDL_Delay(2000);
-    }
+//         printf("SWAPPING %d\n",4);
+// 		SDL_GL_SwapWindow(w->window);
+//     }
  
     /* Cleanup all the things we bound and allocated */
     glUseProgram(0);

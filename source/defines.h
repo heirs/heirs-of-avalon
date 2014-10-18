@@ -21,6 +21,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#define HOA_FRAME_TICKS 1000 / 60
 #define HOA_IMG_FLAGS IMG_INIT_PNG
 #define HOA_TILE_W 64
 #define HOA_TILE_H 32
@@ -28,5 +29,6 @@
 typedef uint32_t cmask;
 typedef uint32_t eid;
 typedef uint16_t err;
+typedef uint32_t time;
 
 #endif // HOA_DEFINES_H
