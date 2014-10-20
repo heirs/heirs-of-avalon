@@ -67,11 +67,19 @@ int gfx_compile_shader(GLuint *shader,GLenum type,const GLchar *source) {
 	return 0;
 }
 
-void gfx_draw_3d(World *w) {
+void gfx_draw_3d(World *w,GLfloat *rgb, SDL_Rect *r) {
 	int win_w,win_h;
 	SDL_GetWindowSize(w->window,&win_w,&win_h);
 	
-	int i;
+	GLfloat xf,yf,wf,hf,half_x,half_y;
+	half_x = win_w / 2.0;
+	half_y = win_h / 2.0;
+	xf = ((r->x - half_x) / half_x);
+	yf = -((r->y - half_y) / half_y);
+	wf = ((r->x + r->w - half_x) / half_x);
+	hf = -((r->y + r->h - half_y) / half_y);
+	
+// 	int i;
 	GLuint vao, vbo[2]; /* Create handles for our Vertex Array Object and two Vertex Buffer Objects */
 	int IsLinked;
 	int maxLength;
@@ -79,19 +87,18 @@ void gfx_draw_3d(World *w) {
 
 	/* We're going to create a simple diamond made from lines */
 	const GLfloat diamond[4][2] = {
-		{  0.2, -0.2  },
-		{ -0.2, -0.2  },
-		{  0.2,  0.2  },
-		{ -0.2,  0.2  } };
+		{ wf, hf  },
+		{ xf, hf  },
+		{ wf, yf  },
+		{ xf, yf  }
+	};
 
 	const GLfloat colors[4][3] = {
-		{  1.0,  0.0,  0.0  }, /* Red */
-		{  0.0,  1.0,  0.0  }, /* Green */
-		{  0.0,  0.0,  1.0  }, /* Blue */
-		{  1.0,  1.0,  1.0  } }; /* White */
- 
-/* These pointers will receive the contents of our shader source code files */
-//     GLchar *vertexsource, *fragmentsource;
+		{ rgb[0], rgb[1], rgb[2] },
+		{ rgb[0], rgb[1], rgb[2] },
+		{ rgb[0], rgb[1], rgb[2] },
+		{ rgb[0], rgb[1], rgb[2] }
+	};
  
     /* These are handles used to reference the shaders */
     GLuint vertexshader, fragmentshader;
@@ -202,8 +209,7 @@ void gfx_draw_3d(World *w) {
 
  
         /* Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes */
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
- 
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         /* Swap our buffers to make our changes visible */
 //         printf("SWAPPING %d\n",4);
 // 		SDL_GL_SwapWindow(w->window);

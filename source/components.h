@@ -38,6 +38,7 @@ typedef struct {
 } ScreenPosition;
 
 typedef struct {
+	float rgb[3];
 	SDL_Surface *sprite;
 } Sprite;
 

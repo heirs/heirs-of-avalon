@@ -135,7 +135,7 @@ void entity_destroy(World *w, eid n) {
 	w->mask[n] = C_NONE;
 }
 
-eid create_gui(World *w, float x, float y, const char *path) {
+eid create_gui(World *w, float x, float y, float rgb[3], const char *path) {
 	eid n = entity_create(w);
 	
 	w->mask[n] = C_SCREEN_POSITION | C_SPRITE | C_NAME;
@@ -145,6 +145,9 @@ eid create_gui(World *w, float x, float y, const char *path) {
 	
 	w->name[n].name = "gui";
 	
+	w->sprite[n].rgb[0] = rgb[0];
+	w->sprite[n].rgb[1] = rgb[1];
+	w->sprite[n].rgb[2] = rgb[2];
 	w->sprite[n].sprite = util_load_asset_img(path);
 	
 	return n;
@@ -162,8 +165,18 @@ eid create_tile(World *w, float x, float y, char *name) {
 	
 	w->name[n].name = name;
 	
-	if (!strcmp(name,"grass")) asset = "assets/tiles/grass0_45.png";
-	else asset = "assets/tiles/shallow0_45.png";
+	if (!strcmp(name,"grass")) {
+		asset = "assets/tiles/grass0_45.png";
+		w->sprite[n].rgb[0] = 0.5;
+		w->sprite[n].rgb[1] = 1.5;
+		w->sprite[n].rgb[2] = 0.5;
+	}
+	else {
+		asset = "assets/tiles/shallow0_45.png";
+		w->sprite[n].rgb[0] = 0.5;
+		w->sprite[n].rgb[1] = 0.5;
+		w->sprite[n].rgb[2] = 1.0;
+	}
 	w->sprite[n].sprite = util_load_asset_img(asset);
 	
 	return n;
@@ -204,8 +217,12 @@ int main(/*int argc,char* argv[]*/) {
 	
 	create_unit(&world,0,0,0.002,0.002,"deer");
 	
-	create_gui(&world,10,10,"assets/green_dot.bmp");
-	create_gui(&world,100,200,"assets/green_dot.bmp");
+	float red[3]   = { 1.0, 0.5, 0.5 };
+	float green[3] = { 0.5, 1.0, 0.5 };
+	float blue[3]  = { 0.5, 0.5, 1.0 };
+	create_gui(&world,0,0,red,"assets/green_dot.bmp");
+	create_gui(&world,10,10,blue,"assets/green_dot.bmp");
+	create_gui(&world,100,200,green,"assets/green_dot.bmp");
 	
 	while (!quit) {
 		while (SDL_PollEvent(&ev) != 0) {

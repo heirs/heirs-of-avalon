@@ -40,9 +40,8 @@ void gui_run(World *w) {
 			r.h = s->sprite->h;
 			
 			// show sprite
-			gfx_blit_sprite(w,s->sprite,&r);
+// 			gfx_blit_sprite(w,s->sprite,&r);
+			gfx_draw_3d(w,s->rgb,&r);
 		}
 	}
-	
-	gfx_draw_3d(w);
 }
