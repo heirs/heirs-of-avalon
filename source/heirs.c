@@ -39,20 +39,20 @@
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
-void world_load(World *w) {
+void world_load(World *W) {
 	int i;
 	
 	for(i=0;i<HOA_ENTITIES_MAX;i++) {
-		w->mask[i] = C_NONE;
-		w->sprite[i].sprite = NULL;
+		W->mask[i] = C_NONE;
+		W->sprite[i].sprite = 0;
 	}
 	
-	w->window = NULL;
-	w->screen = NULL;
+	W->window = NULL;
+	W->screen = NULL;
 	
-	w->tick_last = 0;
-	w->tick_this = 0;
-	w->delta_ticks = 0;
+	W->tick_last = 0;
+	W->tick_this = 0;
+	W->delta_ticks = 0;
 	
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) return e_const(E_SDL,SDL_GetError());
 	
@@ -73,7 +73,7 @@ void world_load(World *w) {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	
-	w->window = SDL_CreateWindow(
+	W->window = SDL_CreateWindow(
 		"Heirs of Avalon",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -81,9 +81,9 @@ void world_load(World *w) {
 		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 	);
 	
-	if (w->window == NULL) return e_const(E_SDL,SDL_GetError());
+	if (W->window == NULL) return e_const(E_SDL,SDL_GetError());
 	
-	w->context = SDL_GL_CreateContext(w->window);
+	W->context = SDL_GL_CreateContext(W->window);
 	
 	// check context error?
 	/* Enable Z depth testing so objects closest to the viewpoint are in front of objects further away */
@@ -94,31 +94,31 @@ void world_load(World *w) {
     SDL_GL_SetSwapInterval(1);
 }
 
-void world_unload(World *w) {
+void world_unload(World *W) {
 	int i;
 	
 	for(i=0;i<HOA_ENTITIES_MAX;i++) {
-		if(w->mask[i] != C_NONE) {
-			SDL_FreeSurface(w->sprite[i].sprite);
-			w->sprite[i].sprite = NULL;
+		if(W->mask[i] != C_NONE) {
+			gfx_free_asset_img(W->sprite[i].sprite);
+			W->sprite[i].sprite = 0;
 		}
 	}
 	
-	SDL_GL_DeleteContext(w->context);
+	SDL_GL_DeleteContext(W->context);
 	
-	SDL_DestroyWindow(w->window);
-	w->window = NULL;
-	w->screen = NULL;
+	SDL_DestroyWindow(W->window);
+	W->window = NULL;
+	W->screen = NULL;
 	
 	IMG_Quit();
 	SDL_Quit();
 };
 
-eid entity_create(World *w) {
+eid entity_create(World *W) {
 	eid n;
 	
 	for(n = 1; n < HOA_ENTITIES_MAX; n++) {
-		if (w->mask[n] == C_NONE) {
+		if (W->mask[n] == C_NONE) {
 			return n;
 		}
 	}
@@ -127,75 +127,77 @@ eid entity_create(World *w) {
 	return 0;
 }
 
-void entity_destroy(World *w, eid n) {
+void entity_destroy(World *W, eid n) {
 	if (n >= HOA_ENTITIES_MAX) {
 		e_int(E_ENTITY_INVALID,n);
 	}
 	
-	w->mask[n] = C_NONE;
+	W->mask[n] = C_NONE;
 }
 
-eid create_gui(World *w, float x, float y, float rgb[3], const char *path) {
-	eid n = entity_create(w);
+eid create_gui(World *W, int x, int y, int w, int h, float rgb[3], const char *path) {
+	eid n = entity_create(W);
 	
-	w->mask[n] = C_SCREEN_POSITION | C_SPRITE | C_NAME;
+	W->mask[n] = C_SCREEN_POSITION | C_SPRITE | C_NAME;
 	
-	w->screen_position[n].x = x;
-	w->screen_position[n].y = y;
+	W->screen_position[n].x = x;
+	W->screen_position[n].y = y;
+	W->screen_position[n].w = w;
+	W->screen_position[n].h = h;
 	
-	w->name[n].name = "gui";
+	W->name[n].name = "gui";
 	
-	w->sprite[n].rgb[0] = rgb[0];
-	w->sprite[n].rgb[1] = rgb[1];
-	w->sprite[n].rgb[2] = rgb[2];
-	w->sprite[n].sprite = util_load_asset_img(path);
+	W->sprite[n].rgb[0] = rgb[0];
+	W->sprite[n].rgb[1] = rgb[1];
+	W->sprite[n].rgb[2] = rgb[2];
+	W->sprite[n].sprite = gfx_load_asset_img(path);
 	
 	return n;
 }
 
-eid create_tile(World *w, float x, float y, char *name) {
+eid create_tile(World *W, float x, float y, char *name) {
 	const char *asset;
 	
-	eid n = entity_create(w);
+	eid n = entity_create(W);
 	
-	w->mask[n] = C_POSITION | C_SPRITE | C_NAME;
+	W->mask[n] = C_POSITION | C_SPRITE | C_NAME;
 	
-	w->position[n].x = x;
-	w->position[n].y = y;
+	W->position[n].x = x;
+	W->position[n].y = y;
 	
-	w->name[n].name = name;
+	W->name[n].name = name;
 	
 	if (!strcmp(name,"grass")) {
 		asset = "assets/tiles/grass0_45.png";
-		w->sprite[n].rgb[0] = 0.5;
-		w->sprite[n].rgb[1] = 1.5;
-		w->sprite[n].rgb[2] = 0.5;
+		W->sprite[n].rgb[0] = 0.5;
+		W->sprite[n].rgb[1] = 1.5;
+		W->sprite[n].rgb[2] = 0.5;
 	}
 	else {
 		asset = "assets/tiles/shallow0_45.png";
-		w->sprite[n].rgb[0] = 0.5;
-		w->sprite[n].rgb[1] = 0.5;
-		w->sprite[n].rgb[2] = 1.0;
+		W->sprite[n].rgb[0] = 0.5;
+		W->sprite[n].rgb[1] = 0.5;
+		W->sprite[n].rgb[2] = 1.0;
 	}
-	w->sprite[n].sprite = util_load_asset_img(asset);
+	W->sprite[n].sprite = gfx_load_asset_img(asset);
 	
 	return n;
 }
 
-eid create_unit(World *w, float p_x, float p_y, float v_x, float v_y, char *name) {
-	eid n = entity_create(w);
+eid create_unit(World *W, float p_x, float p_y, float v_x, float v_y, char *name) {
+	eid n = entity_create(W);
 	
-	w->mask[n] = C_POSITION | C_SPRITE | C_VELOCITY | C_NAME;
+	W->mask[n] = C_POSITION | C_SPRITE | C_VELOCITY | C_NAME;
 	
-	w->position[n].x = p_x;
-	w->position[n].y = p_y;
+	W->position[n].x = p_x;
+	W->position[n].y = p_y;
 	
-	w->velocity[n].x = v_x;
-	w->velocity[n].y = v_y;
+	W->velocity[n].x = v_x;
+	W->velocity[n].y = v_y;
 	
-	w->name[n].name = name;
+	W->name[n].name = name;
 	
-	w->sprite[n].sprite = util_load_asset_img("assets/green_dot.bmp");
+	W->sprite[n].sprite = gfx_load_asset_img("assets/green_dot.bmp");
 	
 	return n;
 }
@@ -220,9 +222,9 @@ int main(/*int argc,char* argv[]*/) {
 	float red[3]   = { 1.0, 0.5, 0.5 };
 	float green[3] = { 0.5, 1.0, 0.5 };
 	float blue[3]  = { 0.5, 0.5, 1.0 };
-	create_gui(&world,0,0,red,"assets/green_dot.bmp");
-	create_gui(&world,10,10,blue,"assets/green_dot.bmp");
-	create_gui(&world,100,200,green,"assets/green_dot.bmp");
+	create_gui(&world,0,0,64,64,red,"assets/green_dot.bmp");
+	create_gui(&world,10,10,64,64,blue,"assets/green_dot.bmp");
+	create_gui(&world,100,200,64,64,green,"assets/green_dot.bmp");
 	
 	while (!quit) {
 		while (SDL_PollEvent(&ev) != 0) {

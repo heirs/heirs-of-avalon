@@ -17,17 +17,8 @@
 #include "util.h"
 
 #include "errors.h"
-#include <SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-SDL_Surface* util_load_asset_img(const char *path) {
-	SDL_Surface *sprite = IMG_Load(path);
-	
-	if (sprite == NULL) e_const(E_ASSET_INVALID,IMG_GetError());
-	
-	return sprite;
-}
 
 char* util_load_asset_string(const char *path) {
     FILE *fptr;

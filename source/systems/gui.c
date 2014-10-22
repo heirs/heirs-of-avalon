@@ -17,6 +17,7 @@
 #include "gui.h"
 
 #include "../gfx.h"
+#include "gl.h"
 #include <SDL.h>
 
 void gui_init(World *w) {
@@ -36,12 +37,12 @@ void gui_run(World *w) {
 			
 			r.x = p->x;
 			r.y = p->y;
-			r.w = s->sprite->w;
-			r.h = s->sprite->h;
+			r.w = p->w;
+			r.h = p->h;
 			
 			// show sprite
 // 			gfx_blit_sprite(w,s->sprite,&r);
-			gfx_draw_3d(w,s->rgb,&r);
+			gfx_draw_3d(w,s->rgb,&r,s->sprite);
 		}
 	}
 }

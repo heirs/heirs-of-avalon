@@ -18,6 +18,7 @@
 #define HOA_COMPONENTS_H
 
 #include "defines.h"
+#include "gl.h"
 
 #define HOA_ENTITIES_MAX 100
 
@@ -35,11 +36,13 @@ typedef struct {
 typedef struct {
 	int x;
 	int y;
+	int w;
+	int h;
 } ScreenPosition;
 
 typedef struct {
 	float rgb[3];
-	SDL_Surface *sprite;
+	GLuint sprite;
 } Sprite;
 
 typedef struct {

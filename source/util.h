@@ -19,7 +19,6 @@
 
 #include <SDL.h>
 
-SDL_Surface* util_load_asset_img(const char *path);
 char* util_load_asset_string(const char *path);
 
 #endif // HOA_UTIL_H

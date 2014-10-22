@@ -35,13 +35,13 @@ void render_run(World *w) {
 			p = &(w->position[n]);
 			s = &(w->sprite[n]);
 			
-			r.x = num_ftoi(p->x) * HOA_TILE_W;
-			r.y = num_ftoi(p->y) * HOA_TILE_H;
-			r.w = s->sprite->w;
-			r.h = s->sprite->h;
+// 			r.x = num_ftoi(p->x) * HOA_TILE_W;
+// 			r.y = num_ftoi(p->y) * HOA_TILE_H;
+// 			r.w = s->sprite->w;
+// 			r.h = s->sprite->h;
 			
 			// show sprite
-			gfx_blit_sprite(w,s->sprite,&r);
+// 			gfx_blit_sprite(w,s->sprite,&r);
 		}
 	}
 }

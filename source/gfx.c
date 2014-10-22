@@ -67,7 +67,7 @@ int gfx_compile_shader(GLuint *shader,GLenum type,const GLchar *source) {
 	return 0;
 }
 
-void gfx_draw_3d(World *w,GLfloat *rgb, SDL_Rect *r) {
+void gfx_draw_3d(World *w,GLfloat *rgb, SDL_Rect *r,GLuint texture) {
 	int win_w,win_h;
 	SDL_GetWindowSize(w->window,&win_w,&win_h);
 	
@@ -207,9 +207,13 @@ void gfx_draw_3d(World *w,GLfloat *rgb, SDL_Rect *r) {
 //         glClear(GL_COLOR_BUFFER_BIT);
 // 	for (i=3; i <= 6; i+=3) {
 
- 
+	glBindTexture(GL_TEXTURE_2D,texture);
+    //Tell OpenGL that all subsequent drawing operations should try to use the current 2D texture
+	glEnable(GL_TEXTURE_2D);
         /* Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes */
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	glDisable(GL_TEXTURE_2D);
         /* Swap our buffers to make our changes visible */
 //         printf("SWAPPING %d\n",4);
 // 		SDL_GL_SwapWindow(w->window);
@@ -236,4 +240,26 @@ void gfx_blit_sprite(World *w,SDL_Surface *sprite,SDL_Rect *r) {
 	e = SDL_BlitSurface(sprite,NULL,w->screen,r);
 	
 	if (e != 0) e_const(E_SDL,SDL_GetError());
+}
+
+// http://geometrian.com/programming/tutorials/texturegl/
+GLuint gfx_load_asset_img(const char *path) {
+	GLuint texture = NULL;
+	SDL_Surface *sprite = IMG_Load(path);
+
+	if (sprite == NULL) e_const(E_ASSET_INVALID,IMG_GetError());
+
+	glGenTextures(1,&texture);
+	glBindTexture(GL_TEXTURE_2D,texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sprite->w,sprite->h, 0, GL_RGB,GL_UNSIGNED_BYTE,sprite->pixels);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+	SDL_FreeSurface(sprite);
+
+	return texture;
+}
+
+void gfx_free_asset_img(GLuint texture) {
+	glDeleteTextures(1,&texture);
 }

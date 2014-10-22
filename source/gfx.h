@@ -23,7 +23,9 @@
 #include <SDL.h>
 
 int gfx_compile_shader(GLuint *shader,GLenum type,const GLchar *source);
-void gfx_draw_3d(World *w,GLfloat *rgb,SDL_Rect *r);
+void gfx_draw_3d(World *w,GLfloat *rgb,SDL_Rect *r,GLuint texture);
 void gfx_blit_sprite(World *w,SDL_Surface *sprite,SDL_Rect *r);
+GLuint gfx_load_asset_img(const char *path);
+void gfx_free_asset_img(GLuint texture);
 
 #endif // HOA_GFX_H
