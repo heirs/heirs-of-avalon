@@ -6,10 +6,10 @@ Website: [link](http://heirsofavalon.org)
 
 # Dependencies #
 
-* SDL 2.0
-* SDL Image 2.0
-* OpenGL 3.2
-* Lua 5.2
+* SDL 2.0 [docs](https://wiki.libsdl.org/)
+* SDL Image 2.0 [docs](http://jcatki.no-ip.org:8080/SDL_image/)
+* OpenGL 3.2 [docs](https://www.opengl.org/sdk/docs/man3/)
+* Lua 5.2 [docs](http://www.lua.org/manual/5.2/)
 
 # Component Entity System Resources #
 
