@@ -21,7 +21,7 @@ Website: [link](http://heirsofavalon.org)
 
 # License/Copying #
 
-Heirs of Avalon is copyright (C) 2014 by David Ulrich.
+Heirs of Avalon is copyright (C) 2014 - 2015  by David Ulrich.
 
 For full license details see LICENSE. For asset copyright and license
 terms see `assets/COPYING`.
