@@ -1,17 +1,19 @@
-# Heirs of Avalon #
+# Heirs of Avalon
 
 A real-time civilization building game with mythological influences and a steampunk flair.
 
 Website: [link](http://heirsofavalon.org)
 
-# Dependencies #
+
+# Dependencies
 
 * SDL 2.0 [docs](https://wiki.libsdl.org/)
 * SDL Image 2.0 [docs](http://jcatki.no-ip.org:8080/SDL_image/)
 * OpenGL 3.2 [docs](https://www.opengl.org/sdk/docs/man3/)
 * Lua 5.2 [docs](http://www.lua.org/manual/5.2/)
 
-# Component Entity System Resources #
+
+# Component Entity System Resources
 
 * Easy to follow intro [gamedev.net](http://www.gamedev.net/page/resources/_/technical/game-programming/understanding-component-entity-systems-r3013)
 * JS Implementation [Lemonade Baron](https://github.com/yzziizzy/LemonadeBaron)
@@ -19,7 +21,8 @@ Website: [link](http://heirsofavalon.org)
 * [CGame](https://github.com/nikki93/cgame)
 * [EntityX](https://github.com/alecthomas/entityx)
 
-# License/Copying #
+
+# license
 
 Heirs of Avalon is copyright (C) 2014 - 2015  by David Ulrich.
 
